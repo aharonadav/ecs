@@ -51,7 +51,6 @@
       "healthCheck": {
         "retries": 2,
         "command": [
-          "CMD-SHELL",
           "curl -f http://127.0.0.1 || exit 1"
         ],
         "timeout": 3,
