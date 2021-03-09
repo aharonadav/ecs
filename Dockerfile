@@ -1,18 +1,19 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
-#install all the tools you might want to use in your container
-RUN apt-get update
-RUN apt-get install curl -y
-RUN apt-get install vim -y
-#the following ARG turns off the questions normally asked for location and timezone for Apache
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get install apache2 -y
+# Install dependencies
+RUN apt-get update && \
+ apt-get -y install apache2
 
-#change working directory to root of apache webhost
-WORKDIR var/www/html
+# Install apache and write hello world message
+RUN echo 'Hello World!' > /var/www/html/index.html
 
-#copy your files, if you want to copy all use COPY . .
-COPY index.html index.html
+# Configure apache
+RUN echo '. /etc/apache2/envvars' > /root/run_apache.sh && \
+ echo 'mkdir -p /var/run/apache2' >> /root/run_apache.sh && \
+ echo 'mkdir -p /var/lock/apache2' >> /root/run_apache.sh && \ 
+ echo '/usr/sbin/apache2 -D FOREGROUND' >> /root/run_apache.sh && \ 
+ chmod 755 /root/run_apache.sh
 
-#now start the server
-CMD ["apachectl", "-D", "FOREGROUND"]
+EXPOSE 80
+
+CMD /root/run_apache.sh
