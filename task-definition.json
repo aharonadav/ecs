@@ -49,9 +49,9 @@
       "disableNetworking": null,
       "interactive": null,
       "healthCheck": {
-        "retries": 2,
+        "retries": 5,
         "command": [
-          "curl,-f,http://127.0.0.1,||,exit,1"
+          "CMD-SHELL,curl --fail http://localhost/ || exit 1"
         ],
         "timeout": 3,
         "interval": 5,
