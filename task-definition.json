@@ -51,7 +51,7 @@
       "healthCheck": {
         "retries": 5,
         "command": [
-          "CMD-SHELL,curl http://localhost"
+          "CMD-SHELL,curl -I http://localhost"
         ],
         "timeout": 3,
         "interval": 5,
